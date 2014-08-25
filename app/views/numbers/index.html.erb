@@ -1,0 +1,29 @@
+<h1>Welcome to the Great Number Game!</h1>
+<h2>I am thinking of a number between 1 and 100</h2>
+<h2>Take a guess!</h2>
+<% if(flash[:flag] == 'low') %>
+  <div id="low">
+    <p><%= flash[:message] %></p>
+  </div>
+<% end %>
+<% if(flash[:flag] == 'win') %>
+  <div id="win">
+    <p><%= flash[:message] %></p>
+    <form action="reset">
+    <%= tag(:input, :type => 'hidden', :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+    <input type="submit" value="Play again!">
+  </form>
+<% else %>
+  <div>
+    <form action="guess">
+      <%= tag(:input, :type => 'hidden', :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+      <input type="number" name="guess" min=1 max=100 value="<%= flash[:guess] %>">
+      <input type="submit" value="Guess!">
+    </form>
+  </div>
+<% end %>
+<% if(flash[:flag] == 'high') %>
+  <div id="high">
+    <p><%= flash[:message] %></p>
+  </div>
+<% end %>
